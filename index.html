@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="circle.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            direction: rtl;
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .first-section {
+            margin: 20px 0;
+        }
+
+        .first-section #counter-input {
+            width: 300px;
+            padding: 8px 6px;
+            border-radius: 4px;
+            font-family: Vazirmatn;
+            font-size: .8rem;
+            outline: none;
+            border: 1px solid #95a5a6;
+        }
+
+        .first-section #counter-start {
+            padding: 8px 6px;
+            border-radius: 4px;
+            width: 46px;
+            font-family: Vazirmatn;
+            color: #fff;
+            font-size: .8rem;
+            outline: none;
+            background-color: #e74c3c;
+            border: 1px solid #e74c3c;
+            cursor: pointer;
+
+        }
+
+        .message {
+            margin-top: 15px;
+        }
+
+        .message .loading {
+            font-size: .9rem;
+            color: #e74c3c;
+        }
+
+        .message .success {
+            font-size: .9rem;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="first-section">
+            <input type="text" id="counter-input" placeholder="لطفا زمان را به ثانیه وارد کنید">
+            <button id="counter-start">شروع</button>
+        </div>
+
+        <div class="c100 p50">
+            <span id="counter-second">250</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+
+        <div class="message">
+            <span class="loading">در حال اجرا... </span>
+            <span class="success">شمارنده با موفقیت به اتمام رسید</span>
+        </div>
+    </div>
+</body>
+</html>

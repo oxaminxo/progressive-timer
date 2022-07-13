@@ -54,6 +54,18 @@
 
         }
 
+        #error-message, #circle-timer {
+            display: none;
+        }
+
+        #circle-timer {
+            margin-top: 10px;
+        }
+
+        #error-message {
+            color: #e74c3c;
+        }
+
         .message {
             margin-top: 15px;
         }
@@ -61,11 +73,13 @@
         .message .loading {
             font-size: .9rem;
             color: #e74c3c;
+            display: none;
         }
 
         .message .success {
             font-size: .9rem;
             color: #27ae60;
+            display: none;
         }
     </style>
 </head>
@@ -76,7 +90,9 @@
             <button id="counter-start">شروع</button>
         </div>
 
-        <div class="c100 p50">
+        <small id="error-message"></small>
+
+        <div class="c100 p50" id="circle-timer">
             <span id="counter-second">250</span>
             <div class="slice">
                 <div class="bar"></div>
@@ -89,5 +105,7 @@
             <span class="success">شمارنده با موفقیت به اتمام رسید</span>
         </div>
     </div>
+
+    <script src="./script.js"></script>
 </body>
 </html>

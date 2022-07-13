@@ -16,6 +16,7 @@ startCounter.addEventListener('click', function () {
         circleCounter.style.display = 'none';
         firstCounter.style.display = 'block';
         successMessage.style.display = 'none';
+        inputCounter.value = '';
         return;
     }
     errorMessage.style.display = 'none';
@@ -24,18 +25,29 @@ startCounter.addEventListener('click', function () {
     counterSecond.textContent = second;
     loadingMessage.style.display = 'block';
     successMessage.style.display = 'none';
+    circleCounter.classList.add('p100');
+
+    let orginalSecond = second;
+    let lastPercent = 'p100';
 
     let timerInterval = setInterval(() => {
+        if (lastPercent) circleCounter.classList.remove(lastPercent);
+
         if (second <= 0) {
+            clearInterval(timerInterval);
             circleCounter.style.display = 'none';
             firstCounter.style.display = 'block';
             inputCounter.value = '';
             loadingMessage.style.display = 'none';
             successMessage.style.display = 'block';
-            clearInterval(timerInterval);
+            return;
         }
 
         second -= 1;
+        let percent = 100 - Math.floor((orginalSecond - second) / orginalSecond * 100);
+        lastPercent = `p${percent}`;
+        console.log(percent);
+        circleCounter.classList.add(`p${percent}`);
         counterSecond.textContent= second;
     }, 1000);
     

@@ -1,54 +1,71 @@
-const firstCounter = document.querySelector('.first-section');
-const inputCounter = document.querySelector('#counter-input');
-const startCounter = document.querySelector('#counter-start');
-const errorMessage = document.querySelector('#error-message');
-const circleCounter = document.querySelector('#circle-timer');
-const counterSecond = document.querySelector('#circle-timer > span');
-const loadingMessage = document.querySelector('.message .loading');
-const successMessage = document.querySelector('.message .success');
+/* Elements selection */ 
+const firstCounter   = document.querySelector('.first-section'),
+      inputCounter   = document.querySelector('#counter-input'),
+      startCounter   = document.querySelector('#counter-start'),
+      errorMessage   = document.querySelector('#error-message'),
+      circleCounter  = document.querySelector('#circle-timer'),
+      counterSecond  = document.querySelector('#circle-timer > span'),
+      loadingMessage = document.querySelector('.message .loading'),
+      successMessage = document.querySelector('.message .success');
 
+/* Timer Variables */ 
+let second,
+    orginalSecond,
+    lastPercent,
+    timerInterval;
+
+/* Listener for clicking on start */
 startCounter.addEventListener('click', function () {
-    let second = parseInt(inputCounter.value);
 
+    second = parseInt(inputCounter.value);
+
+    // Validation handling
     if (isNaN(second)) {
-        errorMessage.textContent = 'زمان را به درستی وارد نمائید';
-        errorMessage.style.display = 'block';
-        circleCounter.style.display = 'none';
-        firstCounter.style.display = 'block';
-        successMessage.style.display = 'none';
         inputCounter.value = '';
+        toggleElement({element: errorMessage, show: true, message: 'زمان را به درستی وارد نمائید'});
+        toggleElement({element: circleCounter, show: false});
+        toggleElement({element: firstCounter, show: true});
+        toggleElement({element: successMessage, show: false});
         return;
     }
-    errorMessage.style.display = 'none';
-    circleCounter.style.display = 'block';
-    firstCounter.style.display = 'none';
+    lastPercent = 'p100';
+    orginalSecond = second;
     counterSecond.textContent = second;
-    loadingMessage.style.display = 'block';
-    successMessage.style.display = 'none';
     circleCounter.classList.add('p100');
+    toggleElement({element: errorMessage, show: false});
+    toggleElement({element: circleCounter, show: true});
+    toggleElement({element: firstCounter, show: false});
+    toggleElement({element: loadingMessage, show: true});
+    toggleElement({element: successMessage , show: false});
 
-    let orginalSecond = second;
-    let lastPercent = 'p100';
-
-    let timerInterval = setInterval(() => {
+    
+    
+    // Timer function
+    timerInterval = setInterval(() => {
         if (lastPercent) circleCounter.classList.remove(lastPercent);
 
+        // prevent of negative number and toggle elements
         if (second <= 0) {
             clearInterval(timerInterval);
-            circleCounter.style.display = 'none';
-            firstCounter.style.display = 'block';
             inputCounter.value = '';
-            loadingMessage.style.display = 'none';
-            successMessage.style.display = 'block';
+            toggleElement({element: circleCounter, show: false});
+            toggleElement({element: firstCounter, show: true});
+            toggleElement({element: loadingMessage, show: false});
+            toggleElement({element: successMessage , show: true});
             return;
-        }
+        } 
 
         second -= 1;
-        let percent = 100 - Math.floor((orginalSecond - second) / orginalSecond * 100);
-        lastPercent = `p${percent}`;
-        console.log(percent);
-        circleCounter.classList.add(`p${percent}`);
-        counterSecond.textContent= second;
+        let percent = lastPercent = `p${100 - Math.floor((orginalSecond - second) / orginalSecond * 100)}`;
+        circleCounter.classList.add(percent);
+        counterSecond.textContent = second;
+        
     }, 1000);
     
 })
+
+/* Toggle show or hide element and insert message if it was neccessary */
+const toggleElement = ({element, show, message}) => {
+    show    ? element.style.display = 'block' : element.style.display = 'none';
+    message ? element.textContent   = message : null;
+}
